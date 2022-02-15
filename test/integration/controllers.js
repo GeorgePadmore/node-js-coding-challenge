@@ -2,15 +2,16 @@
 
 let assert = require('chai').assert;
 let request = require('supertest-as-promised');
-
-let app = require('../../app');
+const setupTestDB = require('../utils/setupTestDB');
+let app = require('../../app_backend/app');
 let _user = 'integration_test_' + Math.floor(Date.now() / 1000) + '@alttab.co';
+
+setupTestDB();
 
 describe('Authentication Controller', () => {
 
   it('should register a new user and return token', () => {
     let _token = null;
-
     return request(app)
       .post('/api/register')
       .send({
